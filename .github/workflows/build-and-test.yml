@@ -1,0 +1,34 @@
+name: build-and-test
+
+on:
+  push:
+    paths-ignore:
+      - "**.md"
+    branches:
+      - main
+  pull_request:
+    paths-ignore:
+      - "**.md"
+    branches:
+      - main
+
+jobs:
+  webapi-build-and-test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        dotnet-version: ["6.0.x"]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
+        uses: actions/setup-dotnet@v1.7.2
+        with:
+          dotnet-version: ${{ matrix.dotnet-version }}
+      - name: Install dependencies for WebApi
+        run: dotnet restore
+      - name: Build WebApi
+        run: dotnet build --configuration Release --no-restore
+      - name: Test WebApi
+        run: dotnet test -c Release --no-restore --verbosity normal
