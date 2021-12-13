@@ -1,11 +1,12 @@
 ﻿using System.Text.RegularExpressions;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using Movies.WebApi.Interfaces;
 using Movies.WebApi.Models;
 
 namespace Movies.WebApi.Services;
 
-public class MongoService
+public class MongoService: IMongoService
 {
     private IMongoClient MongoClient { get; }
     private IMongoDatabase? Database { get; set; }

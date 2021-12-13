@@ -1,13 +1,13 @@
+using Movies.WebApi.Interfaces;
 using Movies.WebApi.Models;
-using Movies.WebApi.Services;
 
 namespace Movies.WebApi.GraphQL;
 
 public class MovieQuery
 {
-    public MongoService MongoService { get; }
+    private IMongoService MongoService { get; }
 
-    public MovieQuery(MongoService mongoService)
+    public MovieQuery(IMongoService mongoService)
     {
         MongoService = mongoService ?? throw new ArgumentNullException(nameof(mongoService));
     }
