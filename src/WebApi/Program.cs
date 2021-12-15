@@ -5,15 +5,12 @@ using Movies.WebApi.Interfaces;
 using Movies.WebApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Services.AddCustomCors(builder.Configuration);
 builder.Services.AddControllers();
-
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
 builder.Services.AddSingleton<IMongoClient, MongoClient>(sp => new MongoClient(builder.Configuration.GetConnectionString("MongoDb")));
 builder.Services.AddScoped<IMongoService, MongoService>();
-
 builder.Services
         .AddGraphQLServer()
         .AddQueryType<MovieQuery>()
@@ -31,14 +28,12 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseResponseCompression();
-
 app.UseHttpsRedirection();
+app.UseRouting();
 app.UseAuthorization();
 app.MapControllers();
-
-app
-    .UseRouting()
-    .UseEndpoints(endpoints =>
+app.UseCors();
+app.UseEndpoints(endpoints =>
     {
         endpoints.MapGraphQL();
     });

@@ -1,33 +1,32 @@
-version: '3.9'
+version: "3.9"
 
-services: 
+services:
   mongo:
     image: mongo
     restart: always
     environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: S3cr3t!
-      MONGO_INITDB_DATABASE: Test
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=S3cr3t!
+      - MONGO_INITDB_DATABASE=Test
     ports:
       - 27017:27017
       - 27018:27018
     volumes:
       - mongo_volume:/data/db
-
   mongo-express:
     image: mongo-express
     restart: always
+    environment:
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=root
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=S3cr3t!
+      - ME_CONFIG_MONGODB_SERVER=mongo
+      - ME_CONFIG_MONGODB_URL="mongodb://root:S3cr3t!@mongo:27017/"
+      - ME_CONFIG_BASICAUTH_USERNAME=test
+      - ME_CONFIG_BASICAUTH_PASSWORD=S3cr3t
+      - WAIT_HOSTS=mongo:27017
     ports:
       - 8081:8081
-    environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: root
-      ME_CONFIG_MONGODB_ADMINPASSWORD: S3cr3t!
-      ME_CONFIG_MONGODB_SERVER: mongo
-      ME_CONFIG_MONGODB_URL: mongodb://root:S3cr3t!@mongo:27017/
-      ME_CONFIG_BASICAUTH_USERNAME: test
-      ME_CONFIG_BASICAUTH_PASSWORD: S3cr3t
     depends_on:
-      - mongo
-
+    - mongo
 volumes:
   mongo_volume: {}

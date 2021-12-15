@@ -1,0 +1,15 @@
+version: "3.9"
+
+services:
+  angularclient:
+    build:
+      context: ../
+      dockerfile: src/AngularApp/Dockerfile
+    environment:
+      - WAIT_HOSTS=movies-api:443
+    volumes:
+      - ../ssl:/ssl
+    ports:
+      - 44399:443
+    depends_on:
+      - movies-api

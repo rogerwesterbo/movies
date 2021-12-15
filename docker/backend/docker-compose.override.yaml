@@ -3,8 +3,8 @@ version: '3.9'
 services:
   movies-api:
     build: 
-      context: ../src
-      dockerfile: WebApi/Dockerfile
+      context: ../
+      dockerfile: src/WebApi/Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_Kestrel__Certificates__Default__Password=
@@ -12,6 +12,7 @@ services:
       - ASPNETCORE_HTTPS_PORT=443
       - ASPNETCORE_URLS=https://+:443;
       - 'ConnectionStrings__MongoDb=mongodb://root:S3cr3t!@mongo/Movies?authSource=admin'
+      - WAIT_HOSTS=mongo:27017
     volumes:
       - ../ssl/server.pfx:/app/server.pfx
     ports:
