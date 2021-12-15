@@ -3,7 +3,7 @@ version: '3.9'
 services:
   movies-api:
     build: 
-      context: ../
+      context: ../src
       dockerfile: WebApi/Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
