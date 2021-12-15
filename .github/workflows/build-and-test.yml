@@ -27,8 +27,11 @@ jobs:
         with:
           dotnet-version: ${{ matrix.dotnet-version }}
       - name: Install dependencies for WebApi
+        working-directory: ./src
         run: dotnet restore
       - name: Build WebApi
+        working-directory: ./src
         run: dotnet build --configuration Release --no-restore
       - name: Test WebApi
+        working-directory: ./src
         run: dotnet test -c Release --no-restore --verbosity normal
