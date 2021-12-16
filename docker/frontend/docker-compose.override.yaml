@@ -13,3 +13,15 @@ services:
       - 44399:443
     depends_on:
       - movies-api
+  reactclient:
+    build:
+      context: ../
+      dockerfile: src/reactapp/Dockerfile
+    environment:
+      - WAIT_HOSTS=movies-api:443
+    volumes:
+      - ../ssl:/ssl
+    ports:
+      - 44398:443
+    depends_on:
+      - movies-api
