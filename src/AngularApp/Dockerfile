@@ -15,4 +15,4 @@ COPY --from=builder /build/dist/angular-app /app
 ADD src/wait /app/wait
 RUN chmod +x /app/wait
 
-CMD /app/wait && exec nginx -g 'daemon off;'
+CMD ["/bin/sh",  "-c",  "envsubst < /app/assets/env.template.js > /app/assets/env.js && /app/wait && exec nginx -g 'daemon off;'"]

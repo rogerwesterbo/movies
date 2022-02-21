@@ -9,13 +9,14 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_Kestrel__Certificates__Default__Password=
       - ASPNETCORE_Kestrel__Certificates__Default__Path=server.pfx
-      - ASPNETCORE_HTTPS_PORT=443
-      - ASPNETCORE_URLS=https://+:443;
+      - ASPNETCORE_HTTPS_PORT=44300
+      - ASPNETCORE_URLS=http://+:8080;https://+:44300
       - 'ConnectionStrings__MongoDb=mongodb://root:S3cr3t!@mongo/Movies?authSource=admin'
       - WAIT_HOSTS=mongo:27017
     volumes:
       - ../ssl/server.pfx:/app/server.pfx
     ports:
-      - 44300:443
+      - 44300:44300
+      - 8080:8080
     depends_on:
       - mongo

@@ -6,11 +6,12 @@ services:
       context: ../
       dockerfile: src/AngularApp/Dockerfile
     environment:
-      - WAIT_HOSTS=movies-api:443
+      - WAIT_HOSTS=movies-api:44300
+      - GRAPHQL_URL=https://localhost:44300/graphql
     volumes:
       - ../ssl:/ssl
     ports:
-      - 44399:443
+      - 44399:8443
     depends_on:
       - movies-api
   reactclient:
@@ -18,10 +19,10 @@ services:
       context: ../
       dockerfile: src/reactapp/Dockerfile
     environment:
-      - WAIT_HOSTS=movies-api:443
+      - WAIT_HOSTS=movies-api:44300
     volumes:
       - ../ssl:/ssl
     ports:
-      - 44398:443
+      - 44398:8443
     depends_on:
       - movies-api

@@ -1,8 +1,13 @@
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
+declare let require: any;
+declare let window: any;
+const { version: appVersion } = require('../../package.json');
 
 export const environment = {
+  appVersion,
+  graphqlUrl: 'http://localhost:8080/graphql',
   production: false
 };
 

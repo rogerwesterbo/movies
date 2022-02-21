@@ -3,7 +3,7 @@ WORKDIR /build
 COPY src/AngularApp/package.json .
 RUN npm install
 COPY src/AngularApp .
-RUN npm run build:prod
+RUN npm run build --prod
 
 FROM nginx:latest
 WORKDIR /app
@@ -15,4 +15,4 @@ COPY --from=builder /build/dist/angular-app /app
 ADD src/wait /app/wait
 RUN chmod +x /app/wait
 
-CMD ["/bin/sh",  "-c", "/app/wait && exec nginx -g 'daemon off;'"]
+CMD ["/bin/sh",  "-c",  "envsubst < /app/assets/env.template.js > /app/assets/env.js && /app/wait && exec nginx -g 'daemon off;'"]

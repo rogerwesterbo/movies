@@ -28,7 +28,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseResponseCompression();
-app.UseHttpsRedirection();
+if (builder.Configuration.GetValue<bool>("HttpsEnabled") == true)
+    app.UseHttpsRedirection();
 app.UseRouting();
 app.UseAuthorization();
 app.MapControllers();
